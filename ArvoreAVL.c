@@ -30,34 +30,35 @@ int obterFBal(AVL); //devolve o fBal de uma AVL
 No * buscarPai(AVL, int); //devolve o futuro pai de um no
 AVL inserirAVL(AVL, int); //insere um item na AVL
 
-No * rotacaoLadoEsquerdo(No *);
-No * rotacaoLadoDireito(No *);
 No * rotacaoSimplesEsquerda(No *); //rotacao simples esquerda
 No * rotacaoSimplesDireita(No *); //rotacao simples para direita
 No * rotacaoDuplaEsquerda(No *); //rotacao dupla direita-esquerda
 No * rotacaoDuplaDireita(No *); //rotacao dupla esquerda-direita
 
-
-void mostrarAVL_ERD(AVL); //mostra a AVL usando caminhamento EDR
+void mostrarAVL_ERD(AVL); //mostra a AVL usando caminhamento ERD
+void mostrarAVL_EDR(AVL); //mostra a AVL usando o caminhamento EDR
+void mostrarAVL_RED(AVL); //mostra a AVL usando o caminhamento RED
 void mostrarAVL_BFS(AVL); //mostra a AVL usando o caminhamento BFS
 
 
 int main(){
 	AVL A;
 	A = criarAVLVazia();
-//	A = inserirAVL(A, 1);
-//	A = inserirAVL(A, 2);
-//	A = inserirAVL(A, 3);
-//	A = inserirAVL(A, 4);
-//	A = inserirAVL(A, 5);
 	A = inserirAVL(A, 5);
 	A = inserirAVL(A, 3);
-	A = inserirAVL(A, 4);
+	A = inserirAVL(A, 9);
+	A = inserirAVL(A, 8);
+	A = inserirAVL(A, 13);
+	A = inserirAVL(A, 25);
 	
 	
-	printf("\nERD:\n");
+	printf("\n\ncaminhamento ERD:\n");
 	mostrarAVL_ERD(A);
-	printf("\nBFS:\n");
+	printf("\n\ncaminhamento EDR:\n");
+	mostrarAVL_EDR(A);
+	printf("\n\ncaminhamento RED:\n");
+	mostrarAVL_RED(A);
+	printf("\n\ncaminhamento BFS:\n");
 	mostrarAVL_BFS(A);
 	
 	return 0;
@@ -225,40 +226,6 @@ AVL inserirAVL(AVL A, int n){ //insere um item na AVL
 	return A;
 }
 
-No * rotacaoLadoEsquerdo(No * p){ //rotacao no lado esquerdo
-	No * y, * rot;
-	rot = p;
-	if(p != NULL){
-		y = p -> esq;
-		if(y != NULL){
-			if(p -> fBal == y -> fBal){
-				rot = rotacaoSimplesDireita(p);
-			}
-			else{
-				rot = rotacaoDuplaDireita(p);
-			}
-		}
-	}
-	return rot;
-}
-
-No * rotacaoLadoDireito(No * p){ //rotacao no lado direito
-	No * y, * rot;
-	rot = p;
-	if(p != NULL){
-		y = p -> dir;
-		if(y != NULL){
-			if(p -> fBal == y -> fBal){
-				rot = rotacaoSimplesEsquerda(p);
-			}
-			else{
-				rot = rotacaoDuplaEsquerda(p);
-			}
-		}
-	}
-	return rot;
-}
-
 No * rotacaoSimplesEsquerda(No * p){ //rotacao simples para esquerda em p
 	No * y, * rse, * e, * vater;
 	rse = p;
@@ -369,13 +336,33 @@ No * rotacaoDuplaDireita(No * p){ //rotacao dupla esquerda-direita em p
 	return rdd;
 }
 
-void mostrarAVL_ERD(AVL A){ //mostra a AVL usando o caminhamento EDR
+void mostrarAVL_ERD(AVL A){ //mostra a AVL usando o caminhamento ERD
 	No * p;
 	if(A != NULL){
 		p = A;
 		mostrarAVL_ERD(p -> esq);
 		printf(" %d ", p -> item);
 		mostrarAVL_ERD(p -> dir);
+	}
+}
+
+void mostrarAVL_EDR(AVL A){ //mostra a AVL usando o caminhamento EDR
+	No * p;
+	if(A != NULL){
+		p = A;
+		mostrarAVL_EDR(p -> esq);
+		mostrarAVL_EDR(p -> dir);
+		printf(" %d ", p -> item);
+	}
+}
+
+void mostrarAVL_RED(AVL A){ //mostra a AVL usando o caminhamento RED
+	No * p;
+	if(A != NULL){
+		p = A;
+		printf(" %d ", p -> item);
+		mostrarAVL_RED(p -> esq);
+		mostrarAVL_RED(p -> dir);
 	}
 }
 
@@ -402,4 +389,3 @@ void mostrarAVL_BFS(AVL A){ //mostra a AVL usando o caminhamento BFS
 		printf("\nArvore vazia!");
 	}
 }
-
