@@ -1,6 +1,6 @@
 /*	ARVORE AVL
 	Arquivo: ArvoreAVL.c
-	Autor: tokyyto
+	Autor: guilherme schnekenberg
 	Data: 31/10/2024 13:42
 	Descricao: implementacao de funcoes basicas envolvendo Arvores AVL
 	Anotacoes: N/A
